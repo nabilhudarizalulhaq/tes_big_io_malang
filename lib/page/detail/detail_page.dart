@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_big_io_mobile_dev/shared/theme.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
-
-  @override
-  State<DetailPage> createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget detail(context, name, species, gender, origin, location, image) {
     return Scaffold(
       backgroundColor: yellowColor,
       appBar: AppBar(
@@ -49,7 +40,7 @@ class _DetailPageState extends State<DetailPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'nama',
+                name.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 21,
                   fontWeight: semiBold,
@@ -61,7 +52,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: 5,
               ),
               Text(
-                'species',
+                species.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 21,
                   fontWeight: semiBold,
@@ -71,7 +62,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: 5,
               ),
               Text(
-                'gender',
+                gender.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 21,
                   fontWeight: semiBold,
@@ -81,7 +72,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: 5,
               ),
               Text(
-                'origin',
+                origin.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 21,
                   fontWeight: semiBold,
@@ -91,7 +82,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: 5,
               ),
               Text(
-                'location',
+                location.toString(),
                 style: blackTextStyle.copyWith(
                   fontSize: 21,
                   fontWeight: semiBold,
@@ -107,6 +98,7 @@ class _DetailPageState extends State<DetailPage> {
                   color: greenColor,
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(image: NetworkImage(image.toString()))
                 ),
               )
             ],
@@ -115,4 +107,4 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
-}
+

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:test_big_io_mobile_dev/models/get_list_models.dart';
 import 'package:test_big_io_mobile_dev/page/detail/detail_page.dart';
@@ -12,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int currenIndex = 0;
   List<Result> infoList = [];
   List<Result> _infoList = [];
 
@@ -19,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     final result = await InfoListService.fetchList();
     infoList = result;
     setState(() {
-      infoList;
+      _infoList = infoList;
     });
   }
 
@@ -34,9 +37,9 @@ class _HomePageState extends State<HomePage> {
     _infoList = result;
     setState(() {
       if (val.isEmpty) {
-        _infoList = result;
+        _infoList = infoList;
       } else {
-        result
+        infoList
             .where((element) => element.name
                 .toString()
                 .toLowerCase()
@@ -67,6 +70,7 @@ class _HomePageState extends State<HomePage> {
             TextField(
               onChanged: (value) {
                 updateList(value);
+                print(value);
               },
               decoration: InputDecoration(
                   label: Text(
@@ -83,18 +87,26 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const DetailPage()),
-                  );
-                },
-                child: ListView.builder(
-                  itemCount: _infoList.length,
-                  itemBuilder: (context, index) {
-                    final list = _infoList[index];
-                    return Container(
+              child: ListView.builder(
+                itemCount: _infoList.length,
+                itemBuilder: (context, index) {
+                  final list = _infoList[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => detail(
+                                context,
+                                list.name.toString(),
+                                list.species.toString(),
+                                list.gender.toString(),
+                                list.origin.toString(),
+                                list.location.name.toString(),
+                                list.image.toString())).toString(),
+                      );
+                    },
+                    child: Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 22,
                         vertical: 10,
@@ -178,9 +190,9 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
